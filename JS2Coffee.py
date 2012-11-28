@@ -37,13 +37,13 @@ class JsCoffeeCommand(sublime_plugin.WindowCommand):
             stderr=subprocess.PIPE,
             shell=True
         )
-        output, error = js2coffee.communicate(contents)
+        output, error = js2coffee.communicate(contents.encode('utf8')
 
         if error:
             self.write_to_console(error)
             self.window.run_command("show_panel", {"panel": "output.exec"})
             return None
-        return output
+        return output.decode('utf8')
 
     def write_to_console(self, str):
         self.output_view = self.window.get_output_panel("exec")
